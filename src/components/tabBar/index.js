@@ -2,12 +2,6 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './index.module.less';
-import homeIcon from '../../static/home.png';
-import homeActiveIcon from '../../static/home-active.png';
-import spaceIcon from '../../static/space.png';
-import spaceActiveIcon from '../../static/space-active.png';
-import mineIcon from '../../static/mine.png';
-import mineActiveIcon from '../../static/mine-active.png';
 
 export default function CustomTabBar(props) {
   const history = useHistory();
@@ -56,20 +50,20 @@ const tabs = [
   {
     key: '/',
     title: '',
-    icon: homeIcon,
-    activeIcon: homeActiveIcon,
+    icon: '/img/home.png',
+    activeIcon: '/img/home-active.png',
   },
   {
     key: '/space',
     title: '',
-    icon: spaceIcon,
-    activeIcon: spaceActiveIcon,
+    icon: '/img/space.png',
+    activeIcon: '/img/space-active.png',
   },
   {
     key: '/mine',
     title: '',
-    icon: mineIcon,
-    activeIcon: mineActiveIcon,
+    icon: '/img/mine.png',
+    activeIcon: '/img/mine-active.png',
   },
 ];
 
