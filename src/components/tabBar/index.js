@@ -1,13 +1,15 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { TabBar } from 'antd-mobile';
-import {
-  AppOutline,
-  MessageOutline,
-  UserOutline,
-} from 'antd-mobile-icons';
+import classNames from 'classnames';
+import styles from './index.module.less';
+import homeIcon from '../../static/home.png';
+import homeActiveIcon from '../../static/home-active.png';
+import spaceIcon from '../../static/space.png';
+import spaceActiveIcon from '../../static/space-active.png';
+import mineIcon from '../../static/mine.png';
+import mineActiveIcon from '../../static/mine-active.png';
 
-export default function TabBar(props) {
+export default function CustomTabBar(props) {
   const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
@@ -16,35 +18,61 @@ export default function TabBar(props) {
   };
   const { tabs } = props;
 
-  return (
-    <div>
-      <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
-        {tabs.map((item) => (
-          <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
-        ))}
-      </TabBar>
-    </div>
-  );
+  const renderTabItem = () => {
+    return tabs.map((item, index) => {
+      const { key, title, icon, activeIcon } = item;
+      const activeKey = pathname === key;
+      return (
+        <div
+          className={styles['tab-bar-item']}
+          key={index}
+          onClick={() => setRouteActive(key)}
+        >
+          <div className={styles['tab-bar-icon-wrap']}>
+            <img
+              className={styles['tab-bar-icon']}
+              src={activeKey ? activeIcon : icon}
+              alt={title}
+            />
+          </div>
+          {title && (
+            <div
+              className={classNames(styles['tab-bar-name'], {
+                [styles['tab-bar-active-name']]: activeKey,
+              })}
+            >
+              {title}
+            </div>
+          )}
+        </div>
+      );
+    });
+  };
+
+  return <div className={styles['tab-bar-wrap']}>{renderTabItem()}</div>;
 }
 
 const tabs = [
   {
     key: '/',
     title: '',
-    icon: <AppOutline />,
+    icon: homeIcon,
+    activeIcon: homeActiveIcon,
   },
   {
     key: '/space',
     title: '',
-    icon: <MessageOutline />,
+    icon: spaceIcon,
+    activeIcon: spaceActiveIcon,
   },
   {
     key: '/mine',
     title: '',
-    icon: <UserOutline />,
+    icon: mineIcon,
+    activeIcon: mineActiveIcon,
   },
 ];
 
-TabBar.defaultProps = {
-  tabs
-}
+CustomTabBar.defaultProps = {
+  tabs,
+};

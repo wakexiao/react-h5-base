@@ -1,55 +1,32 @@
-import React, { lazy, Fragment } from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { TabBar } from 'antd-mobile';
-import {
-  AppOutline,
-  MessageOutline,
-  UserOutline,
-} from 'antd-mobile-icons';
+import React, { lazy, Suspense } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { SpinLoading } from 'antd-mobile';
 
+import HomeLayout from '../components/layout/homeLayout';
 import Home from '../pages/home';
 const Space = lazy(() => import('../pages/space'));
 const Mine = lazy(() => import('../pages/mine'));
 
+const spinLaodingStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
+
 export default function IndexRoute() {
-  const history = useHistory();
-  const location = useLocation();
-  const { pathname } = location;
-
-  const setRouteActive = (value) => {
-    history.push(value);
-  };
-
-  const tabs = [
-    {
-      key: '/',
-      title: '首页',
-      icon: <AppOutline />,
-    },
-    {
-      key: '/space',
-      title: '空间',
-      icon: <MessageOutline />,
-    },
-    {
-      key: '/mine',
-      title: '我的',
-      icon: <UserOutline />,
-    },
-  ];
-
   return (
-    <Fragment>
-      <Switch>
-        <Route path="/space" component={Space} />
-        <Route path="/mine" component={Mine} />
-        <Route path="/" component={Home} />
-      </Switch>
-      <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
-        {tabs.map((item) => (
-          <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
-        ))}
-      </TabBar>
-    </Fragment>
+    <HomeLayout>
+      <Suspense
+        fallback={<SpinLoading color="primary" style={spinLaodingStyle} />}
+      >
+        <Switch>
+          <Route path="/space" exact component={Space} />
+          <Route path="/mine" exact component={Mine} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
+        </Switch>
+      </Suspense>
+    </HomeLayout>
   );
 }

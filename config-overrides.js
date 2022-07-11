@@ -36,6 +36,7 @@ module.exports = {
     // }),
     /**
      * postcss-pxtorem 配置
+     * react-script 5.x 会有问题  https://github.com/arackaf/customize-cra/issues/327
      */
     addPostcssPlugins([
       require('postcss-pxtorem')({

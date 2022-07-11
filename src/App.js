@@ -1,15 +1,13 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import RoutesConfig from './routers'
 import { BrowserRouter  as Router } from 'react-router-dom'
 
 function App() {
   return (
     <div className='App'>
-      <Suspense fallback={<div>loading...</div>}>
-        <Router>
-          <RoutesConfig />
-        </Router>
-      </Suspense>
+      <Router>
+        <RoutesConfig />
+      </Router>
     </div>
   );
 }
